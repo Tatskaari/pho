@@ -85,3 +85,10 @@ func Then[T any, R any](r Result[T], f func(T) Result[R]) Result[R] {
 func Wrap[T any](ok T, err error) Result[T] {
 	return Result[T]{Ok: ok, Err: err}
 }
+
+func Cast[T any, R any](r Result[T]) Result[R] {
+	if r.Err != nil {
+		return Err[R](r.Err)
+	}
+	return Ok((interface{})(r.Ok).(R))
+}

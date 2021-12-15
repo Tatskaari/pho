@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"os"
+	Option "github.com/tatskaari/pho/option"
 	"io"
 	"io/ioutil"
+	"os"
 	"path/filepath"
 
 	"github.com/tatskaari/pho/result"
@@ -16,10 +17,10 @@ func main() {
 
 	// Map applies the function to the value in the result unless the result is not okay
 	path := result.Map(wd, func(wd string) string {
-		 return filepath.Join(wd, "file.txt")
+		return filepath.Join(wd, "file.txt")
 	})
 
-	// The wrap is like Map however the function can return an error. In which case this will be wrapped up nicely 
+	// The wrap is like Map however the function can return an error. In which case this will be wrapped up nicely
 	// for you
 	file := result.ThenWrap(path, os.Open)
 
@@ -28,15 +29,15 @@ func main() {
 		file.Close()
 	})
 
-	// Cast can be useful to conver the type of the result. Go generics are not covarient so this is often necessary. 
+	// Cast can be useful to conver the type of the result. Go generics are not covarient so this is often necessary.
 	// In this case, ioutil.ReadAll expects a io.Reader, which *io.File implements. Go isn't happy with this though,
-	// so we have to cast it here. 
+	// so we have to cast it here.
 	reader := result.Cast[*os.File, io.Reader](file)
 
 	bytes := result.ThenWrap(reader, ioutil.ReadAll)
 
-	// Once we've mapped all our functions to the result, we can unwrap it to get at the raw result type. 
-	// There's also MustUnwrap which will panic if the result is not okay. 
+	// Once we've mapped all our functions to the result, we can unwrap it to get at the raw result type.
+	// There's also MustUnwrap which will panic if the result is not okay.
 	str, err := result.Map(bytes, func(b []byte) string {
 		return string(b)
 	}).Unwrap()
@@ -46,5 +47,7 @@ func main() {
 		return
 	}
 	fmt.Println(str)
+
+	_ = Option.Some(10)
 
 }

@@ -1,7 +1,7 @@
 // Package result contains a type definition for Result[T] which represents a result value. That is the value can be
 // some value T, or it can be an error.
 //
-// Result should not be used to handle optional values. See github.com/tatskaari/pho/optoin for more information on that
+// Result should not be used to handle optional values. See github.com/tatskaari/pho/option for more information on that
 package result
 
 // Result represents a result that can either be okay, or an error

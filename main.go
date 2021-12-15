@@ -43,7 +43,7 @@ func main() {
 	}).Unwrap()
 
 	if err != nil {
-		fmt.Println("Error reading file: %v", err)
+		fmt.Printf("Error reading file: %v\n", err)
 		return
 	}
 	fmt.Println(str)

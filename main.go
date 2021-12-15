@@ -29,8 +29,8 @@ func main() {
 		file.Close()
 	})
 
-	// Cast can be useful to conver the type of the result. Go generics are not covarient so this is often necessary.
-	// In this case, ioutil.ReadAll expects a io.Reader, which *io.File implements. Go isn't happy with this though,
+	// Cast can be useful to convert the type of the result. Go generics are not covariant so this is often necessary.
+	// In this case, ioutil.ReadAll expects an io.Reader, which *io.File implements. Go isn't happy with this though,
 	// so we have to cast it here.
 	reader := result.Cast[*os.File, io.Reader](file)
 
